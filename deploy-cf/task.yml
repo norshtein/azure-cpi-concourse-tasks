@@ -1,0 +1,44 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+  repository: microsoft/azure-cli
+
+inputs:
+- name: azure-cpi-concourse-tasks
+- name: store
+- name: template
+
+outputs:
+- name: integration-config
+
+run: 
+  path: azure-cpi-concourse-tasks/deploy-cf/task
+
+params:
+  # Azure Credentials
+  # - Required
+  TENANT_ID:
+  CLIENT_ID:
+  CLIENT_SECRET:
+  
+  # Virtual Machine Settings
+  # - Optional
+  VM_NAME: testMachine
+  ADMIN_USERNAME: azure
+
+  # Resrouce Settings
+  # - Required
+  RESROUCE_GROUP_NAME:
+  AZURE_REGION:
+
+  # SSH Public Key
+  # - Required, ssh public key of your devbox
+  SSH_PUBLIC_KEY: 
+  
+  # Template File and Parameter File
+  # - The path is relative to the `template` input
+  TEMPLATE_FILE: azuredeploy.json
+  PARAMETER_FILE: azuredeploy.parameters.json

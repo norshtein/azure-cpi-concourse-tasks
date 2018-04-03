@@ -1,0 +1,41 @@
+#!/bin/bash
+set -xeu
+
+az login --service-principal -u ${CLIENT_ID} -p ${CLIENT_SECRET} --tenant ${TENANT_ID}
+
+az group create --name ${RESOURCE_GROUP_NAME} --location ${AZURE_REGION}
+
+# This is a function used to change a filed in json
+# The first parameter is json seletion in jq
+# The second parameter is the value to be changed 
+# The third parameter is json file
+change_json_field() {
+  set +x
+  touch tmpFile
+  jq "${1} = ${2}" ${3} > tmpFile
+  mv tmpFile ${3}
+  set -x
+}
+
+# Generate parameter file
+pushd store
+change_json_field .parameters.tenantID.value \"${TENANT_ID}\" ${PARAMETER_FILE}
+change_json_field .parameters.clientID.value \"${CLIENT_ID}\" ${PARAMETER_FILE}
+change_json_field .parameters.clientSecret.value \"${CLIENT_SECRET}\" ${PARAMETER_FILE}
+change_json_field .parameters.vmName.value \"${VM_NAME}\" ${PARAMETER_FILE}
+change_json_field .parameters.adminUsername.value \"${ADMIN_USERNAME}\" ${PARAMETER_FILE}
+change_json_field .parameters.sshKeyData.value \"${SSH_PUBLIC_KEY}\" ${PARAMETER_FILE}
+
+# Create resource
+az group deployment create \
+    --name Deployment
+    --resource-group ${RESOURCE_GROUP_NAME}
+    --template-file ${TEMPLATE_FILE}
+    --parameters ${PARAMETER_FILE}
+
+# Get devbox ip address
+local ip
+ip=$(az vm show -g ${RESOURCE_GROUP_NAME} -n {VM_NAME} -d -otable | sed -n 3p | awk '{print $5}')
+
+# Fetch cloud foundry password
+scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  -i general ${user}@${ip}:/home/${ADMIN_USERNAME}/cf-deployment-vars.yml ./
