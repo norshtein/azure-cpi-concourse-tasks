@@ -1,8 +1,6 @@
 #!/bin/bash
 set -xeu
 
-ls -al
-ls azure-cpi-concourse-tasks
 source azure-cpi-concourse-tasks/shared-functions
 
 function commit_integration_configs() {
@@ -29,8 +27,8 @@ function main() {
     change_json_field .parameters.clientSecret.value \"${CLIENT_SECRET}\" ${PARAMETER_FILE}
     change_json_field .parameters.vmName.value \"${VM_NAME}\" ${PARAMETER_FILE}
     change_json_field .parameters.adminUsername.value \"${ADMIN_USERNAME}\" ${PARAMETER_FILE}
+    echo ${SSH_PUBLIC_KEY} 
     change_json_field .parameters.sshKeyData.value \"${SSH_PUBLIC_KEY}\" ${PARAMETER_FILE}
-    
     # Enable auto deploy bosh and cf to parameter file
     #   Pass
 
