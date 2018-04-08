@@ -5,7 +5,6 @@ source azure-cpi-concourse-tasks/shared-functions
 
 function commit_integration_configs() {
   set -x
-  apt install git -y
   pushd integration-configs
     git config user.name "${GIT_COMMIT_USERNAME}"
     git config user.email "${GIT_COMMIT_EMAIL}"
