@@ -7,7 +7,7 @@
 function change_json_field() {
   set +x
   touch tmpFile
-  jq "${1} = ${2}" ${3} > tmpFile
+  jq "${1}=${2}" ${3} > tmpFile
   mv tmpFile ${3}
   set -x
 }

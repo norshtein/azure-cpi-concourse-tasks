@@ -26,11 +26,8 @@ function main() {
     change_json_field .parameters.clientSecret.value \"${CLIENT_SECRET}\" ${PARAMETER_FILE}
     change_json_field .parameters.vmName.value \"${VM_NAME}\" ${PARAMETER_FILE}
     change_json_field .parameters.adminUsername.value \"${ADMIN_USERNAME}\" ${PARAMETER_FILE}
-    echo ${SSH_PUBLIC_KEY} 
-    SSH_PUBLIC_KEY=$(echo $SSH_PUBLIC_KEY | cut -b 9-)
-    echo ${SSH_PUBLIC_KEY}
-    change_json_field .parameters.sshKeyData.value \"${SSH_PUBLIC_KEY}\" ${PARAMETER_FILE}
-    exit 0
+    temp=$(cat $PARAMETER_FILE | jq ".parameters.sshKeyData.value=\"${SSH_PUBLIC_KEY}\"")
+    echo $temp > $PARAMETER_FILE
     # Enable auto deploy bosh and cf to parameter file
     #   Pass
 
@@ -44,7 +41,7 @@ function main() {
 
   # Get devbox ip address
   local ip
-  ip=$(az vm show -g ${RESOURCE_GROUP_NAME} -n {VM_NAME} -d -otable | sed -n 3p | awk '{print $5}')
+  ip=$(az vm show -g ${RESOURCE_GROUP_NAME} -n ${VM_NAME} -d -otable | sed -n 3p | awk '{print $5}')
   
   # Fetch cloud foundry information
   local fetch_password
