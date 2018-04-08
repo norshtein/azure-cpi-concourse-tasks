@@ -1,6 +1,8 @@
 #!/bin/bash
 set -xeu
 
+ls -al
+ls azure-cpi-concourse-tasks
 source azure-cpi-concourse-tasks/shared-functions
 
 function commit_integration_configs{
