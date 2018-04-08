@@ -10,6 +10,7 @@ inputs:
 - name: azure-cpi-concourse-tasks
 - name: template
 - name: integration-configs
+- name: private-key
 outputs:
 - name: updated-integration-configs
 
@@ -33,9 +34,11 @@ params:
   RESROUCE_GROUP_NAME:
   AZURE_REGION:
 
-  # SSH Public Key
-  # - Required, ssh public key of your devbox
+  # SSH Key
+  # - Public key, required, ssh public key of your devbox, a string
   SSH_PUBLIC_KEY: 
+  # - Private key, required, path relative to `private-key` folder
+  SSH_PRIVATE_KEY:
   
   # Template File and Parameter File
   # - The path is relative to the `template` input
