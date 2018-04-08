@@ -4,15 +4,14 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-  repository: microsoft/azure-cli
+    repository: microsoft/azure-cli
 
 inputs:
 - name: azure-cpi-concourse-tasks
-- name: store
 - name: template
-
+- name: integration-configs
 outputs:
-- name: integration-config
+- name: updated-integration-configs
 
 run: 
   path: azure-cpi-concourse-tasks/deploy-cf/task
@@ -42,3 +41,12 @@ params:
   # - The path is relative to the `template` input
   TEMPLATE_FILE: azuredeploy.json
   PARAMETER_FILE: azuredeploy.parameters.json
+  
+  # Integration File Template
+  # - The path is relative to the `integration-configs` input
+  CATS_INTEGRATION_CONFIG_FILE: cats_integration_config.json
+
+  # Git Information
+  # - Optional, you may change to your own
+  GIT_COMMIT_USERNAME: norshtein
+  GIT_COMMIT_EMAIL: t-tosi@microsoft.com
