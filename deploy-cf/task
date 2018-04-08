@@ -27,7 +27,10 @@ function main() {
     change_json_field .parameters.vmName.value \"${VM_NAME}\" ${PARAMETER_FILE}
     change_json_field .parameters.adminUsername.value \"${ADMIN_USERNAME}\" ${PARAMETER_FILE}
     echo ${SSH_PUBLIC_KEY} 
+    SSH_PUBLIC_KEY=$(echo $SSH_PUBLIC_KEY | cut -b 9-)
+    echo ${SSH_PUBLIC_KEY}
     change_json_field .parameters.sshKeyData.value \"${SSH_PUBLIC_KEY}\" ${PARAMETER_FILE}
+    exit 0
     # Enable auto deploy bosh and cf to parameter file
     #   Pass
 
