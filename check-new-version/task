@@ -11,7 +11,7 @@ function commit_azure_templates() {
   git clone azure-quickstart-templates updated-azure-quickstart-templates
 }
 function main() {
-  pushd azure-quickstart-templates/${BOSH_SETUP}
+  pushd azure-quickstart-templates/${BOSH_SETUP_FOLDER}
   ./${SCRIPT_NAME}
   popd
 }
