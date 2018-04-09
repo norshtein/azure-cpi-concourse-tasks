@@ -26,11 +26,10 @@ function main() {
     change_json_field .parameters.clientSecret.value \"${CLIENT_SECRET}\" ${PARAMETER_FILE}
     change_json_field .parameters.vmName.value \"${VM_NAME}\" ${PARAMETER_FILE}
     change_json_field .parameters.adminUsername.value \"${ADMIN_USERNAME}\" ${PARAMETER_FILE}
-    temp=$(cat $PARAMETER_FILE | jq ".parameters.sshKeyData.value=\"${SSH_PUBLIC_KEY}\"")
-    echo $temp > $PARAMETER_FILE
+    change_json_field .parameters.sshKeyData.value "\"${SSH_PUBLIC_KEY}\"" ${PARAMETER_FILE}
     # Enable auto deploy bosh and cf 
     change_json_field .parameters.autoDeployBosh.value \"enabled\" ${PARAMETER_FILE}
-    change_json_field .parameters.autoDeployCloudFoundry \"enabled\" ${PARAMETER_FILE}
+    change_json_field .parameters.autoDeployCloudFoundry.value \"enabled\" ${PARAMETER_FILE}
 
     # Deploy bosh and cf 
     az group deployment create \
