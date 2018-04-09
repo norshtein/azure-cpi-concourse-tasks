@@ -1,0 +1,19 @@
+#!/bin/bash
+set -xeu
+
+function commit_azure_templates() {
+  pushd azure-quickstart-templates
+    git config user.name "${GIT_COMMIT_USERNAME}"
+    git config user.email "${GIT_COMMIT_EMAIL}"
+    git add .
+    git commit -m "Update bosh setup manifest"
+  popd
+  git clone azure-quickstart-templates updated-azure-quickstart-templates
+}
+function main() {
+  pushd azure-quickstart-templates/${BOSH_SETUP}
+  ./${SCRIPT_NAME}
+  popd
+}
+trap commit_azure_templates EXIT
+main
