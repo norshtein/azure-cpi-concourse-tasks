@@ -42,8 +42,8 @@ params:
   
   # Template File and Parameter File
   # - The path is relative to the `template` input
-  TEMPLATE_FILE: azuredeploy.json
-  PARAMETER_FILE: azuredeploy.parameters.json
+  TEMPLATE_FILE: bosh-setup/azuredeploy.json
+  PARAMETER_FILE: bosh-setup/azuredeploy.parameters.json
   
   # Integration File Template
   # - The path is relative to the `integration-configs` input
