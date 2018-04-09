@@ -28,8 +28,9 @@ function main() {
     change_json_field .parameters.adminUsername.value \"${ADMIN_USERNAME}\" ${PARAMETER_FILE}
     temp=$(cat $PARAMETER_FILE | jq ".parameters.sshKeyData.value=\"${SSH_PUBLIC_KEY}\"")
     echo $temp > $PARAMETER_FILE
-    # Enable auto deploy bosh and cf to parameter file
-    #   Pass
+    # Enable auto deploy bosh and cf 
+    change_json_field .parameters.autoDeployBosh.value \"enabled\" ${PARAMETER_FILE}
+    change_json_field .parameters.autoDeployCloudFoundry \"enabled\" ${PARAMETER_FILE}
 
     # Deploy bosh and cf 
     az group deployment create \
