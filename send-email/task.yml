@@ -12,7 +12,9 @@ outputs:
 - name: email-out
 
 params:
-  OUTPUT_SUBJECT_FILE_NAME: generated-subject
-  OUTPUT_BODY_FILE_NAME: generated-body
+  OUTPUT_SUBJECT_FILE_NAME: 
+  OUTPUT_BODY_FILE_NAME: 
+  SUBJECT:
+  BODY:
 run:
   path: cf-deployment-concourse-tasks/send-email/task.sh
