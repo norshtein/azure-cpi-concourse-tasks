@@ -6,6 +6,6 @@ function main() {
   rm -rf $(ls)  
   popd
 
-  cp -r bbl-state/ empty-bbl-state/
+  cp -R bbl-state/. empty-bbl-state/
 }
 main
