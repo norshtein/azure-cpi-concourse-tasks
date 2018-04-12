@@ -1,0 +1,11 @@
+#!/bin/bash
+set -xeu
+
+function main() {
+  pushd "bbl-state/${BBL_STATE_DIR}"
+  rm -rf $(ls)  
+  popd
+
+  cp -r bbl-state/ empty-bbl-state/
+}
+main
