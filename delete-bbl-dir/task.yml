@@ -21,3 +21,6 @@ params:
   # - Path to the directory containing the `bbl-state.json` file
   # - The path is relative to the `bbl-state` input
   # - It will be set to empty after running the task
+  
+  GIT_COMMIT_USERNAME:
+  GIT_COMMIT_EMAIL:
