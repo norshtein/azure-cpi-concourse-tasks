@@ -16,8 +16,8 @@ function main() {
   pushd azure-quickstart-templates/${BOSH_SETUP_FOLDER}
   ./${SCRIPT_NAME}
   wget http://bosh.cloudfoundry.org/stemcells/bosh-azure-hyperv-ubuntu-trusty-go_agent -O page
-  stemcell_version=$(awk '/./{line=$0} END{print line}' manifests/cf-deployment.yml | awk '{print $2}')
-  stemcell_url=$(cat page | awk "/<a href=\".*\" .*>${stemcell_version}<\/a>/" | grep -o "\"https.* ")
+  stemcell_version=$(awk '/./{line=$0} END{print line}' manifests/cf-deployment.yml | awk '{print $2}' | sed 's/"//g')
+  stemcell_url=$(cat page | awk "/<a href=\".*\" .*>${stemcell_version}<\/a>/" | grep -o "\"https.* " | sed 's/"//g')
   stemcell_sha1=$(cat page | awk '/<span class="file-md5">/' | grep -o ">.* " | awk 'NR==1{print $1}' | cut -b 2-)
 
   change_json_field .variables.environmentAzure.stemcellUrl \"${stemcell_url}\" ${DEPLOY_TEMPLATE}
