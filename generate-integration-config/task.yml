@@ -8,6 +8,10 @@ image_resource:
 
 inputs:
 - name: azure-cpi-concourse-tasks
+- name: integration-config
+
+outputs:
+- name: updated-integration-config
 
 run: 
   path: azure-cpi-concourse-tasks/generate-integration-config/task
@@ -18,3 +22,6 @@ params:
   ADMIN_USER:
   ADMIN_PASSWORD:
   
+  # Username and email using to push to integration repo.You should replace with your own. 
+  GIT_COMMIT_USERNAME: norshtein
+  GIT_COMMIT_EMAIL: t-tosi@microsoft.com
